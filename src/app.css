@@ -1,0 +1,68 @@
+/* Global Responsive Styles */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+#app {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Responsive typography */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+}
+
+/* Ensure charts are responsive */
+.recharts-responsive-container {
+  width: 100% !important;
+}
+
+/* Touch-friendly button sizes on mobile */
+@media (max-width: 600px) {
+  button,
+  .MuiButton-root {
+    min-height: 44px;
+  }
+  .MuiIconButton-root {
+    padding: 12px;
+  }
+}
+
+/* Better scrolling for tables on mobile */
+@media (max-width: 900px) {
+  .MuiTableContainer-root {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Hide scrollbars but allow scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

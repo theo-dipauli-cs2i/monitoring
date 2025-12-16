@@ -1,6 +1,7 @@
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import type { Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -13,6 +14,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { Link, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const drawerWidth = 240;
 
@@ -38,12 +40,16 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `60px`,
 });
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const PermanentDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }: { theme: Theme; open: boolean }) => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+            display: 'block',
+        },
         '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
@@ -54,11 +60,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 interface SideMenuProps {
     open: boolean;
+    onClose?: () => void;
 }
 
-export default function SideMenu({ open }: SideMenuProps) {
+export default function SideMenu({ open, onClose }: SideMenuProps) {
     const location = useLocation();
     const themeContext = useContext(ThemeContext) as any;
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const menuItems = [
         { text: 'Dashboard', path: '/', key: 'dashboard', icon: DashboardIcon },
@@ -68,8 +77,8 @@ export default function SideMenu({ open }: SideMenuProps) {
 
     const visibleItems = menuItems.filter(item => themeContext?.menuItemsVisibility?.[item.key] !== false);
 
-    return (
-        <Drawer variant="permanent" open={open}>
+    const drawerContent = (
+        <>
             <DrawerHeader />
             <Divider />
             <List>
@@ -81,28 +90,56 @@ export default function SideMenu({ open }: SideMenuProps) {
                                 component={Link}
                                 to={item.path}
                                 selected={location.pathname === item.path}
+                                onClick={isMobile ? onClose : undefined}
                                 sx={{
                                     minHeight: 48,
                                     px: 2.5,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    textAlign: open ? 'left' : 'center',
+                                    justifyContent: open || isMobile ? 'initial' : 'center',
+                                    textAlign: open || isMobile ? 'left' : 'center',
                                 }}
                             >
                                 <ListItemIcon
                                     sx={{
                                         minWidth: 0,
                                         justifyContent: 'center',
-                                        mr: open ? 3 : 'auto',
+                                        mr: open || isMobile ? 3 : 'auto',
                                     }}
                                 >
                                     <IconComponent />
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText primary={item.text} sx={{ opacity: open || isMobile ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     );
                 })}
             </List>
-        </Drawer>
+        </>
+    );
+
+    // Mobile: temporary drawer
+    if (isMobile) {
+        return (
+            <Drawer
+                variant="temporary"
+                open={open}
+                onClose={onClose}
+                ModalProps={{ keepMounted: true }}
+                sx={{
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                    },
+                }}
+            >
+                {drawerContent}
+            </Drawer>
+        );
+    }
+
+    // Desktop: permanent mini drawer
+    return (
+        <PermanentDrawer variant="permanent" open={open}>
+            {drawerContent}
+        </PermanentDrawer>
     );
 }

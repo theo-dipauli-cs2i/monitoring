@@ -153,9 +153,11 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
         </Menu>
     );
 
+    const handleDrawerClose = () => setDrawerOpen(false);
+
     return (
         <Box sx={{ display: 'flex' }}>
-            <SideMenu open={drawerOpen} />
+            <SideMenu open={drawerOpen} onClose={handleDrawerClose} />
 
             <Box sx={{ flexGrow: 1 }}>
                 <MyAppBar position="fixed">

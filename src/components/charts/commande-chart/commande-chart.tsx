@@ -1,10 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { SparkLineChart } from '@mui/x-charts';
 import data from './commande.json';
 import React from "preact/compat";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function CommandeChart() {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [showHighlight] = React.useState(true);
     const [showTooltip] = React.useState(true);
     const [dateIndex, setDateIndex] = React.useState<null | number>(null);
@@ -12,11 +14,11 @@ export default function CommandeChart() {
     const dates = recentData.map((d: any) => d.date);
     const commandes = recentData.map((d: any) => d.commandes);
     return (
-        <Box sx={{ display: 'flex', flex: 1 }}>
-            <Box sx={{ mr: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', flex: 1, width: '100%' }}>
+            <Box sx={{ mr: isMobile ? 0 : 2, mb: isMobile ? 1 : 0 }}>
                 <Typography variant="h6" sx={{
                     fontWeight: 500,
-                    fontSize: '1.5  rem',
+                    fontSize: isMobile ? '1rem' : '1.5rem',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
@@ -24,7 +26,7 @@ export default function CommandeChart() {
                 <SparkLineChart
                     data={commandes}
                     area
-                    width={200}
+                    width={isMobile ? 150 : 200}
                     height={50}
                     showHighlight={showHighlight}
                     showTooltip={showTooltip}
@@ -40,8 +42,8 @@ export default function CommandeChart() {
                     axisHighlight={{ x: 'line' }}
                 />
             </Box>
-            <Box sx={{ flex: 1, mt: 5 }}>
-                <Typography variant="h4">{commandes[dateIndex ?? commandes.length - 1]}</Typography>
+            <Box sx={{ flex: 1, mt: isMobile ? 1 : 5 }}>
+                <Typography variant={isMobile ? "h5" : "h4"}>{commandes[dateIndex ?? commandes.length - 1]}</Typography>
             </Box>
         </Box>
     )

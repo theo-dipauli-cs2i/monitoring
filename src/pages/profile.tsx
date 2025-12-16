@@ -44,7 +44,7 @@ export default function Profile() {
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 {/* LEFT COLUMN */}
-                <Grid size={8}>
+                <Grid size={{ xs: 12, md: 8 }} order={{ xs: 2, md: 1 }}>
                     {/* Profile info */}
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>
@@ -52,7 +52,7 @@ export default function Profile() {
                         </Typography>
 
                         <Grid container spacing={2}>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     fullWidth
                                     label="Prénom"
@@ -62,7 +62,7 @@ export default function Profile() {
                                     }
                                 />
                             </Grid>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     fullWidth
                                     label="Nom"
@@ -109,7 +109,7 @@ export default function Profile() {
                                     }
                                 />
                             </Grid>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     fullWidth
                                     type="password"
@@ -120,7 +120,7 @@ export default function Profile() {
                                     }
                                 />
                             </Grid>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, sm: 6 }}>
                                 <TextField
                                     fullWidth
                                     type="password"
@@ -142,7 +142,7 @@ export default function Profile() {
                 </Grid>
 
                 {/* RIGHT COLUMN */}
-                <Grid size={4}>
+                <Grid size={{ xs: 12, md: 4 }} order={{ xs: 1, md: 2 }}>
                     <Paper sx={{ p: 2, textAlign: "center" }}>
                         <Avatar
                             src={user.avatarUrl}
