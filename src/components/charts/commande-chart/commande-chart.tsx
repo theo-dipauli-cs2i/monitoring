@@ -17,12 +17,10 @@ export default function CommandeChart() {
                 <Typography variant="h6" sx={{
                     fontWeight: 500,
                     fontSize: '1.5  rem',
-                    pt: 1,
-                }}> <ShoppingCartIcon width="8px"
-                    height="12px" /> commandes</Typography>
-                <Typography variant="h4">{commandes[dateIndex ?? commandes.length - 1]}</Typography>
-            </Box>
-            <Box sx={{ flex: 1, mt: 5 }}>
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                }}> <ShoppingCartIcon /> commandes</Typography>
                 <SparkLineChart
                     data={commandes}
                     area
@@ -41,6 +39,9 @@ export default function CommandeChart() {
                     }
                     axisHighlight={{ x: 'line' }}
                 />
+            </Box>
+            <Box sx={{ flex: 1, mt: 5 }}>
+                <Typography variant="h4">{commandes[dateIndex ?? commandes.length - 1]}</Typography>
             </Box>
         </Box>
     )

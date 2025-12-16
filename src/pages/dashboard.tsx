@@ -21,7 +21,7 @@ export default function Dashboard() {
                             <Box sx={{ display: 'flex', flex: 1 }}><ChiffreAffaireChart /></Box>
                         </Box>
                     </Paper>
-                    <Paper sx={{ p: 2 }}>
+                    <Paper sx={{ p: 2, mt: 2 }}>
                         <HttpStatusChart />
                         <LogsList />
                     </Paper>

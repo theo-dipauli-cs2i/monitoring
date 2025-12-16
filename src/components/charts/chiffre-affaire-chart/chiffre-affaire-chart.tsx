@@ -3,6 +3,7 @@ import { SparkLineChart } from '@mui/x-charts';
 import EuroIcon from '@mui/icons-material/Euro';
 import data from './chiffre-affaire.json';
 import React from "preact/compat";
+import { green } from "@mui/material/colors";
 
 export default function chiffreAffaireChart() {
     const [showHighlight] = React.useState(true);
@@ -17,17 +18,16 @@ export default function chiffreAffaireChart() {
                 <Typography variant="h6" sx={{
                     fontWeight: 500,
                     fontSize: '1.5  rem',
-                    pt: 1,
-                }}> <EuroIcon width="8px"
-                    height="12px" /> chiffre-affaires</Typography>
-                <Typography variant="h4">{chiffreAffaires[dateIndex ?? chiffreAffaires.length - 1]}</Typography>
-            </Box>
-            <Box sx={{ flex: 1, mt: 5 }}>
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                }}> <EuroIcon /> chiffre-affaires</Typography>
                 <SparkLineChart
                     data={chiffreAffaires}
                     area
                     width={200}
                     height={50}
+                    color={green[500]}
                     showHighlight={showHighlight}
                     showTooltip={showTooltip}
                     xAxis={{ id: 'date-axis', data: dates }}
@@ -41,6 +41,9 @@ export default function chiffreAffaireChart() {
                     }
                     axisHighlight={{ x: 'line' }}
                 />
+            </Box>
+            <Box sx={{ flex: 1, mt: 5 }}>
+                <Typography variant="h4">{chiffreAffaires[dateIndex ?? chiffreAffaires.length - 1]}€</Typography>
             </Box>
         </Box>
     )
