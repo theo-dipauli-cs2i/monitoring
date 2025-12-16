@@ -7,9 +7,9 @@ import NavBar from './components/navBar';
 import SideMenu from './components/sideMenu';
 import { styled } from '@mui/material/styles';
 import Dashboard from './pages/dashboard';
+import Settings from './pages/settings';
 
 function MonitoringPage() { return <div>Monitoring</div>; }
-function SettingsPage() { return <div>Settings</div>; }
 
 const drawerWidth = 240;
 
@@ -52,7 +52,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/monitoring" element={<MonitoringPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </Main>
       </BrowserRouter>
