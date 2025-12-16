@@ -19,6 +19,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SideMenu from './sideMenu';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -28,7 +29,10 @@ const Search = styled('div')(({ theme }) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: { marginLeft: theme.spacing(3), width: 'auto' },
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+    },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -48,7 +52,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('md')]: { width: '20ch' },
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
     },
 }));
 
@@ -66,6 +72,8 @@ interface NavBarProps {
 }
 
 export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
+    const navigate = useNavigate();
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -73,39 +81,74 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-    const handleMenuClose = () => { setAnchorEl(null); setMobileMoreAnchorEl(null); };
-    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => setMobileMoreAnchorEl(event.currentTarget);
+    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+        setAnchorEl(event.currentTarget);
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        setMobileMoreAnchorEl(null);
+    };
+
+    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+        setMobileMoreAnchorEl(event.currentTarget);
+
     const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
 
     const renderMenu = (
-        <Menu anchorEl={anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }} keepMounted
-            open={isMenuOpen} onClose={handleMenuClose}>
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            keepMounted
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem
+                onClick={() => {
+                    handleMenuClose();
+                    navigate('/profile');
+                }}
+            >
+                Profil
+            </MenuItem>
         </Menu>
     );
 
     const renderMobileMenu = (
-        <Menu anchorEl={mobileMoreAnchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }} keepMounted
-            open={isMobileMenuOpen} onClose={handleMobileMenuClose}>
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            keepMounted
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+        >
             <MenuItem>
                 <IconButton size="large" color="inherit">
                     <Badge badgeContent={4} color="secondary"><MailIcon /></Badge>
                 </IconButton>
-                <p>Messages</p>
+                <Typography>Messages</Typography>
             </MenuItem>
+
             <MenuItem>
                 <IconButton size="large" color="inherit">
                     <Badge badgeContent={17} color="secondary"><NotificationsIcon /></Badge>
                 </IconButton>
-                <p>Notifications</p>
+                <Typography>Notifications</Typography>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton size="large" color="inherit"><AccountCircle /></IconButton>
-                <p>Profile</p>
+
+            <MenuItem
+                onClick={() => {
+                    handleMobileMenuClose();
+                    navigate('/profile');
+                }}
+            >
+                <IconButton size="large" color="inherit">
+                    <AccountCircle />
+                </IconButton>
+                <Typography sx={{ ml: 1 }}>
+                    Profil
+                </Typography>
             </MenuItem>
         </Menu>
     );
@@ -126,13 +169,24 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
+
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                        >
                             Monitoring
                         </Typography>
 
                         <Search>
-                            <SearchIconWrapper><SearchIcon /></SearchIconWrapper>
-                            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
                         </Search>
 
                         <Box sx={{ flexGrow: 1 }} />
@@ -148,7 +202,13 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
                         </Box>
 
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                            <IconButton size="large" color="inherit" onClick={handleMobileMenuOpen}><MoreIcon /></IconButton>
+                            <IconButton
+                                size="large"
+                                color="inherit"
+                                onClick={handleMobileMenuOpen}
+                            >
+                                <MoreIcon />
+                            </IconButton>
                         </Box>
                     </Toolbar>
                 </MyAppBar>
