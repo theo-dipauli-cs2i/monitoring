@@ -23,12 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./monitoring
 
       - name: Run tests
         run: npm test
-        working-directory: ./monitoring
 
       - name: Build project
         run: npm run build
-        working-directory: ./monitoring
