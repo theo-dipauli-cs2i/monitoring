@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import Dashboard from './pages/dashboard';
 import Settings from './pages/settings';
 import { ThemeContext } from './contexts/ThemeContext';
+import Profile from './pages/profile';
 
 function MonitoringPage() { return <div>Monitoring</div>; }
 
@@ -95,6 +96,7 @@ export default function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/monitoring" element={<MonitoringPage />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Profile></Profile>} />
             </Routes>
           </Main>
         </BrowserRouter>
