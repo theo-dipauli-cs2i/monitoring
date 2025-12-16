@@ -1,19 +1,15 @@
 import './app.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/navBar';
 import SideMenu from './components/sideMenu';
 import { styled } from '@mui/material/styles';
 import Dashboard from './pages/dashboard';
 
-function MonitoringPage() {
-  return <div>Monitoring</div>;
-}
-function SettingsPage() {
-  return <div>Settings</div>;
-}
+function MonitoringPage() { return <div>Monitoring</div>; }
+function SettingsPage() { return <div>Settings</div>; }
 
 const drawerWidth = 240;
 
@@ -27,20 +23,24 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  marginTop: theme.mixins.toolbar.minHeight, // décale le contenu sous la NavBar
+  marginTop: theme.mixins.toolbar.minHeight,
 }));
 
 export default function App() {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  // Récupérer le mode depuis localStorage ou mettre light par défaut
+  const [mode, setMode] = useState<'light' | 'dark'>(() => {
+    const savedMode = localStorage.getItem('themeMode');
+    return savedMode === 'dark' ? 'dark' : 'light';
+  });
+
   const [drawerOpen] = useState(false);
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: { mode },
-      }),
-    [mode]
-  );
+  // Mettre à jour localStorage à chaque changement de mode
+  useEffect(() => {
+    localStorage.setItem('themeMode', mode);
+  }, [mode]);
+
+  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
 
   const toggleTheme = () => setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
 
@@ -50,7 +50,6 @@ export default function App() {
       <BrowserRouter>
         <NavBar mode={mode} onToggleTheme={toggleTheme} />
         <SideMenu open={drawerOpen} />
-
         <Main open={drawerOpen}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
