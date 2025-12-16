@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { BarChart } from '@mui/x-charts';
 import cpuData from './cpuData.json';
-import { orange, purple } from "@mui/material/colors";
+import { purple } from "@mui/material/colors";
 
 export default function CpuChart() {
     return (
