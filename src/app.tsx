@@ -27,7 +27,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }));
 
 export default function App() {
-  // Récupérer le mode depuis localStorage ou mettre light par défaut
   const [mode, setMode] = useState<'light' | 'dark'>(() => {
     const savedMode = localStorage.getItem('themeMode');
     return savedMode === 'dark' ? 'dark' : 'light';
@@ -35,7 +34,6 @@ export default function App() {
 
   const [drawerOpen] = useState(false);
 
-  // Mettre à jour localStorage à chaque changement de mode
   useEffect(() => {
     localStorage.setItem('themeMode', mode);
   }, [mode]);
