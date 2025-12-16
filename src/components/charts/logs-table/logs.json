@@ -1,0 +1,22 @@
+[
+  { "time": "2025-12-16 00:00:00", "message": "System startup initiated" },
+  { "time": "2025-12-16 02:00:00", "message": "Scheduled backup started" },
+  { "time": "2025-12-16 06:00:00", "message": "Morning maintenance check" },
+  { "time": "2025-12-16 08:00:00", "message": "User login: admin" },
+  {
+    "time": "2025-12-16 09:00:00",
+    "message": "Database connection established"
+  },
+  { "time": "2025-12-16 10:00:00", "message": "Server started successfully" },
+  { "time": "2025-12-16 11:00:00", "message": "High CPU usage detected" },
+  { "time": "2025-12-16 12:00:00", "message": "Peak traffic hour" },
+  {
+    "time": "2025-12-16 14:00:00",
+    "message": "Error: Invalid request from IP 192.168.1.1"
+  },
+  { "time": "2025-12-16 16:00:00", "message": "Memory optimization completed" },
+  { "time": "2025-12-16 18:00:00", "message": "Backup completed" },
+  { "time": "2025-12-16 20:00:00", "message": "System health check passed" },
+  { "time": "2025-12-16 22:00:00", "message": "Low activity period" },
+  { "time": "2025-12-16 23:00:00", "message": "Daily log rotation" }
+]

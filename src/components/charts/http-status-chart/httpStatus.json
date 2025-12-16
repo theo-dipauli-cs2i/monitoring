@@ -1,0 +1,6 @@
+[
+  { "label": "200 OK", "value": 80 },
+  { "label": "404 Not Found", "value": 10 },
+  { "label": "500 Internal Server Error", "value": 5 },
+  { "label": "301 Moved Permanently", "value": 5 }
+]

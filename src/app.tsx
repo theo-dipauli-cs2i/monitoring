@@ -6,10 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/navBar';
 import SideMenu from './components/sideMenu';
 import { styled } from '@mui/material/styles';
+import Dashboard from './pages/dashboard';
 
-function DashboardPage() {
-  return <div>Dashboard</div>;
-}
 function MonitoringPage() {
   return <div>Monitoring</div>;
 }
@@ -55,7 +53,7 @@ export default function App() {
 
         <Main open={drawerOpen}>
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/monitoring" element={<MonitoringPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
