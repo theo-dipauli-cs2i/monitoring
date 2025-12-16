@@ -83,11 +83,13 @@ export default function App() {
 
   const toggleTheme = () => setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
 
+  const routerBasename = import.meta.env.BASE_URL ?? '/';
+
   return (
     <ThemeContext.Provider value={{ mode, setMode, primaryColor, setPrimaryColor, menuItemsVisibility, setMenuItemsVisibility }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
+        <BrowserRouter basename={routerBasename}>
           <NavBar mode={mode} onToggleTheme={toggleTheme} />
           <SideMenu open={drawerOpen} />
           <Main open={drawerOpen}>
