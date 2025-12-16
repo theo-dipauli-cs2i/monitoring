@@ -125,18 +125,14 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
         >
             <MenuItem>
                 <IconButton size="large" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
+                    <Badge badgeContent={4} color="secondary"><MailIcon /></Badge>
                 </IconButton>
                 <Typography>Messages</Typography>
             </MenuItem>
 
             <MenuItem>
                 <IconButton size="large" color="inherit">
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
+                    <Badge badgeContent={17} color="secondary"><NotificationsIcon /></Badge>
                 </IconButton>
                 <Typography>Notifications</Typography>
             </MenuItem>
@@ -200,26 +196,9 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
                         </IconButton>
 
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton size="large" color="inherit">
-                                <Badge badgeContent={4} color="error">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton>
-
-                            <IconButton size="large" color="inherit">
-                                <Badge badgeContent={17} color="error">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
-
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                color="inherit"
-                                onClick={handleProfileMenuOpen}
-                            >
-                                <AccountCircle />
-                            </IconButton>
+                            <IconButton size="large" color="inherit"><Badge badgeContent={4} color="secondary"><MailIcon /></Badge></IconButton>
+                            <IconButton size="large" color="inherit"><Badge badgeContent={17} color="secondary"><NotificationsIcon /></Badge></IconButton>
+                            <IconButton size="large" edge="end" color="inherit" onClick={handleProfileMenuOpen}><AccountCircle /></IconButton>
                         </Box>
 
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

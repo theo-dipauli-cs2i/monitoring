@@ -143,6 +143,26 @@ export default function Settings() {
                                 </Typography>
                             </Box>
                         </Box>
+                        <Box>
+                            <Typography variant="subtitle1" gutterBottom>Couleur secondaire</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <input
+                                    type="color"
+                                    value={themeContext?.secondaryColor || '#9c27b0'}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => themeContext?.setSecondaryColor(e.currentTarget.value)}
+                                    style={{
+                                        width: 60,
+                                        height: 60,
+                                        border: 'none',
+                                        borderRadius: 8,
+                                        cursor: 'pointer',
+                                    }}
+                                />
+                                <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+                                    {themeContext?.secondaryColor || '#9c27b0'}
+                                </Typography>
+                            </Box>
+                        </Box>
                     </Stack>
                 </Collapse>
             </Paper>
