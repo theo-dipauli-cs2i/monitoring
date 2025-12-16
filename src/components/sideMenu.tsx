@@ -7,9 +7,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MonitorIcon from '@mui/icons-material/Monitor';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const drawerWidth = 240;
 
@@ -55,44 +58,50 @@ interface SideMenuProps {
 
 export default function SideMenu({ open }: SideMenuProps) {
     const location = useLocation();
+    const themeContext = useContext(ThemeContext) as any;
 
     const menuItems = [
-        { text: 'Dashboard', path: '/' },
-        { text: 'Monitoring', path: '/monitoring' },
-        { text: 'Settings', path: '/settings' },
+        { text: 'Dashboard', path: '/', key: 'dashboard', icon: DashboardIcon },
+        { text: 'Monitoring', path: '/monitoring', key: 'monitoring', icon: MonitorIcon },
+        { text: 'Settings', path: '/settings', key: 'settings', icon: SettingsIcon },
     ];
+
+    const visibleItems = menuItems.filter(item => themeContext?.menuItemsVisibility?.[item.key] !== false);
 
     return (
         <Drawer variant="permanent" open={open}>
             <DrawerHeader />
             <Divider />
             <List>
-                {menuItems.map((item, index) => (
-                    <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                            component={Link}
-                            to={item.path}
-                            selected={location.pathname === item.path}
-                            sx={{
-                                minHeight: 48,
-                                px: 2.5,
-                                justifyContent: open ? 'initial' : 'center',
-                                textAlign: open ? 'left' : 'center',
-                            }}
-                        >
-                            <ListItemIcon
+                {visibleItems.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                        <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                component={Link}
+                                to={item.path}
+                                selected={location.pathname === item.path}
                                 sx={{
-                                    minWidth: 0,
-                                    justifyContent: 'center',
-                                    mr: open ? 3 : 'auto',
+                                    minHeight: 48,
+                                    px: 2.5,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    textAlign: open ? 'left' : 'center',
                                 }}
                             >
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        justifyContent: 'center',
+                                        mr: open ? 3 : 'auto',
+                                    }}
+                                >
+                                    <IconComponent />
+                                </ListItemIcon>
+                                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    );
+                })}
             </List>
         </Drawer>
     );

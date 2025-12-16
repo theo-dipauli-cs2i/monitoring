@@ -10,4 +10,16 @@ export default defineConfig({
       "react-dom": "preact/compat",
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "mui-core": ["@mui/material"],
+          "mui-icons": ["@mui/icons-material"],
+          router: ["react-router-dom"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
 });
