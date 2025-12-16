@@ -37,6 +37,10 @@ export default function App() {
     return localStorage.getItem('primaryColor') || '#1976d2';
   });
 
+  const [secondaryColor, setSecondaryColor] = useState<string>(() => {
+    return localStorage.getItem('secondaryColor') || '#9c27b0';
+  });
+
   const [menuItemsVisibility, setMenuItemsVisibility] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('menuItemsVisibility');
     if (saved) {
@@ -60,6 +64,10 @@ export default function App() {
   }, [primaryColor]);
 
   useEffect(() => {
+    localStorage.setItem('secondaryColor', secondaryColor);
+  }, [secondaryColor]);
+
+  useEffect(() => {
     localStorage.setItem('menuItemsVisibility', JSON.stringify(menuItemsVisibility));
   }, [menuItemsVisibility]);
 
@@ -68,7 +76,10 @@ export default function App() {
       mode,
       primary: {
         main: primaryColor,
-      }
+      },
+      secondary: {
+        main: secondaryColor,
+      },
     },
     components: {
       MuiAppBar: {
@@ -79,14 +90,23 @@ export default function App() {
         }
       }
     }
-  }), [mode, primaryColor]);
+  }), [mode, primaryColor, secondaryColor]);
 
   const toggleTheme = () => setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   const routerBasename = import.meta.env.BASE_URL ?? '/';
 
   return (
-    <ThemeContext.Provider value={{ mode, setMode, primaryColor, setPrimaryColor, menuItemsVisibility, setMenuItemsVisibility }}>
+    <ThemeContext.Provider value={{
+      mode,
+      setMode,
+      primaryColor,
+      setPrimaryColor,
+      secondaryColor,
+      setSecondaryColor,
+      menuItemsVisibility,
+      setMenuItemsVisibility,
+    }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter basename={routerBasename}>
