@@ -51,9 +51,13 @@ jobs:
     steps:
       - name: Run ESLint
         run: npm run lint
+        env:
+          VITE_BASE_URL: /monitoring/
 
       - name: Run Prettier Check
         run: npm run format:check
+        env:
+          VITE_BASE_URL: /monitoring/
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
