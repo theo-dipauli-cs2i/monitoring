@@ -11,7 +11,9 @@ import Settings from './pages/settings';
 import { ThemeContext } from './contexts/ThemeContext';
 import Profile from './pages/profile';
 
-function MonitoringPage() { return <div>Monitoring</div>; }
+function MonitoringPage() {
+  return <div>Monitoring</div>;
+}
 
 const drawerWidth = 240;
 
@@ -46,15 +48,17 @@ export default function App() {
     return localStorage.getItem('secondaryColor') || '#9c27b0';
   });
 
-  const [menuItemsVisibility, setMenuItemsVisibility] = useState<Record<string, boolean>>(() => {
+  const [menuItemsVisibility, setMenuItemsVisibility] = useState<
+    Record<string, boolean>
+  >(() => {
     const saved = localStorage.getItem('menuItemsVisibility');
     if (saved) {
       return JSON.parse(saved);
     }
     return {
-      'dashboard': true,
-      'monitoring': true,
-      'settings': true,
+      dashboard: true,
+      monitoring: true,
+      settings: true,
     };
   });
 
@@ -73,45 +77,55 @@ export default function App() {
   }, [secondaryColor]);
 
   useEffect(() => {
-    localStorage.setItem('menuItemsVisibility', JSON.stringify(menuItemsVisibility));
+    localStorage.setItem(
+      'menuItemsVisibility',
+      JSON.stringify(menuItemsVisibility)
+    );
   }, [menuItemsVisibility]);
 
-  const theme = useMemo(() => createTheme({
-    palette: {
-      mode,
-      primary: {
-        main: primaryColor,
-      },
-      secondary: {
-        main: secondaryColor,
-      },
-    },
-    components: {
-      MuiAppBar: {
-        styleOverrides: {
-          root: {
-            backgroundColor: primaryColor,
-          }
-        }
-      }
-    }
-  }), [mode, primaryColor, secondaryColor]);
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: primaryColor,
+          },
+          secondary: {
+            main: secondaryColor,
+          },
+        },
+        components: {
+          MuiAppBar: {
+            styleOverrides: {
+              root: {
+                backgroundColor: primaryColor,
+              },
+            },
+          },
+        },
+      }),
+    [mode, primaryColor, secondaryColor]
+  );
 
-  const toggleTheme = () => setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
+  const toggleTheme = () =>
+    setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   const routerBasename = import.meta.env.BASE_URL ?? '/';
 
   return (
-    <ThemeContext.Provider value={{
-      mode,
-      setMode,
-      primaryColor,
-      setPrimaryColor,
-      secondaryColor,
-      setSecondaryColor,
-      menuItemsVisibility,
-      setMenuItemsVisibility,
-    }}>
+    <ThemeContext.Provider
+      value={{
+        mode,
+        setMode,
+        primaryColor,
+        setPrimaryColor,
+        secondaryColor,
+        setSecondaryColor,
+        menuItemsVisibility,
+        setMenuItemsVisibility,
+      }}
+    >
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter basename={routerBasename}>
@@ -119,10 +133,10 @@ export default function App() {
           <SideMenu open={drawerOpen} />
           <Main open={drawerOpen}>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/monitoring" element={<MonitoringPage />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<Profile></Profile>} />
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/monitoring' element={<MonitoringPage />} />
+              <Route path='/settings' element={<Settings />} />
+              <Route path='*' element={<Profile></Profile>} />
             </Routes>
           </Main>
         </BrowserRouter>

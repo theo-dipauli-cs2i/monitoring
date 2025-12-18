@@ -24,7 +24,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
+          node-version: '22.x'
 
       - name: Install dependencies
         run: npm install
@@ -43,7 +43,17 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "./dist"
+          path: './dist'
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Prettier Check
+        run: npm run format:check
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
