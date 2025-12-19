@@ -10,10 +10,9 @@ import Dashboard from './pages/dashboard';
 import Settings from './pages/settings';
 import { ThemeContext } from './contexts/ThemeContext';
 import Profile from './pages/profile';
+import MonitoringPage from './pages/monitoring';
 
-function MonitoringPage() {
-  return <div>Monitoring</div>;
-}
+// MonitoringPage component removed in favor of import from './pages/monitoring'
 
 const drawerWidth = 240;
 
