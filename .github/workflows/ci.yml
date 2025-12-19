@@ -66,6 +66,11 @@ jobs:
         run: npm run lint
         env:
           VITE_BASE_URL: /monitoring/
+      
+      - name: Run Prettier
+        run: npm run format
+        env:
+          VITE_BASE_URL: /monitoring/
 
       - name: Run Prettier Check
         run: npm run format:check
