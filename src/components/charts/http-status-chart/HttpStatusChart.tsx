@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
-import httpStatusData from './httpStatus.json';
+import httpStatusData from '../../../data/httpStatus.json';
 
 export default function HttpStatusChart() {
   const theme = useTheme();

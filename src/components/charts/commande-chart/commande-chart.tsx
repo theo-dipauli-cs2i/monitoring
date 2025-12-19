@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { SparkLineChart } from '@mui/x-charts';
-import data from './commande.json';
+import data from '../../../data/commande.json';
 import React from 'preact/compat';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 

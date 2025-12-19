@@ -1,0 +1,6 @@
+[
+  { "name": "Dashboard", "path": "/" },
+  { "name": "Monitoring", "path": "/monitoring" },
+  { "name": "Settings", "path": "/settings" },
+  { "name": "Profil", "path": "/profile" }
+]

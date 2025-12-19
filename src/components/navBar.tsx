@@ -9,6 +9,12 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import List from '@mui/material/List';
+
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -17,9 +23,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import Paper from '@mui/material/Paper';
+import ListItemButton from '@mui/material/ListItemButton';
 import SideMenu from './sideMenu';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
+import notificationData from '../data/notifications.json';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -71,6 +80,13 @@ interface NavBarProps {
   onToggleTheme: () => void;
 }
 
+const searchablePages = [
+  { name: 'Dashboard', path: '/' },
+  { name: 'Monitoring', path: '/monitoring' },
+  { name: 'Settings', path: '/settings' },
+  { name: 'Profil', path: '/profile' },
+];
+
 export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
   const navigate = useNavigate();
 
@@ -78,6 +94,41 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  // Search state
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchResults, setSearchResults] = React.useState<
+    typeof searchablePages
+  >([]);
+
+  const handleSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const query = event.currentTarget.value;
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      setSearchResults([]);
+    } else {
+      const filtered = searchablePages.filter((page) =>
+        page.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filtered);
+    }
+  };
+
+  const handleSearchSubmit = (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (event.key === 'Enter' && searchResults.length > 0) {
+      handleSearchResultClick(searchResults[0].path);
+    }
+  };
+
+  const handleSearchResultClick = (path: string) => {
+    navigate(path);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -94,6 +145,154 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
     setMobileMoreAnchorEl(event.currentTarget);
 
   const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
+
+  // States for new popups
+  const [messagesAnchorEl, setMessagesAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+  const [notificationsAnchorEl, setNotificationsAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+
+  const isMessagesOpen = Boolean(messagesAnchorEl);
+  const isNotificationsOpen = Boolean(notificationsAnchorEl);
+
+  const handleMessagesOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMessagesAnchorEl(event.currentTarget);
+  };
+
+  const handleMessagesClose = () => {
+    setMessagesAnchorEl(null);
+  };
+
+  const handleNotificationsOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setNotificationsAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationsClose = () => {
+    setNotificationsAnchorEl(null);
+  };
+
+  const renderMessagesMenu = (
+    <Menu
+      anchorEl={messagesAnchorEl}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      keepMounted
+      open={isMessagesOpen}
+      onClose={handleMessagesClose}
+      slotProps={{ paper: { style: { maxHeight: 400, width: 360 } } }}
+    >
+      <Typography variant='subtitle1' sx={{ px: 2, py: 1, fontWeight: 'bold' }}>
+        Messages Recents
+      </Typography>
+      <Divider />
+      <List sx={{ p: 0 }}>
+        {notificationData.messages.map((msg) => (
+          <React.Fragment key={msg.id}>
+            <MenuItem
+              onClick={handleMessagesClose}
+              sx={{ alignItems: 'flex-start', py: 1.5 }}
+            >
+              <ListItemAvatar>
+                <Avatar>{msg.avatar}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={msg.sender}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component='span'
+                      variant='body2'
+                      color='text.primary'
+                      sx={{ display: 'block' }}
+                    >
+                      {msg.subject}
+                    </Typography>
+                    <Typography
+                      component='span'
+                      variant='caption'
+                      color='text.secondary'
+                    >
+                      {msg.time}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </MenuItem>
+            <Divider variant='inset' component='li' />
+          </React.Fragment>
+        ))}
+        {notificationData.messages.length === 0 && (
+          <MenuItem disabled>Aucun message</MenuItem>
+        )}
+      </List>
+      <Box sx={{ p: 1, textAlign: 'center' }}>
+        <Typography
+          variant='caption'
+          color='primary'
+          sx={{ cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          Voir tous les messages
+        </Typography>
+      </Box>
+    </Menu>
+  );
+
+  const renderNotificationsMenu = (
+    <Menu
+      anchorEl={notificationsAnchorEl}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      keepMounted
+      open={isNotificationsOpen}
+      onClose={handleNotificationsClose}
+      slotProps={{ paper: { style: { maxHeight: 400, width: 320 } } }}
+    >
+      <Typography variant='subtitle1' sx={{ px: 2, py: 1, fontWeight: 'bold' }}>
+        Notifications
+      </Typography>
+      <Divider />
+      <List sx={{ p: 0 }}>
+        {notificationData.notifications.map((notif) => (
+          <React.Fragment key={notif.id}>
+            <MenuItem onClick={handleNotificationsClose} sx={{ py: 1.5 }}>
+              <ListItemText
+                primary={
+                  <Typography variant='body2' fontWeight='bold'>
+                    {notif.title}
+                  </Typography>
+                }
+                secondary={notif.time}
+              />
+              {notif.read ? null : (
+                <Box
+                  sx={{
+                    width: 8,
+                    height: 8,
+                    bgcolor: 'primary.main',
+                    borderRadius: '50%',
+                    ml: 1,
+                  }}
+                />
+              )}
+            </MenuItem>
+            <Divider component='li' />
+          </React.Fragment>
+        ))}
+        {notificationData.notifications.length === 0 && (
+          <MenuItem disabled>Aucune notification</MenuItem>
+        )}
+      </List>
+      <Box sx={{ p: 1, textAlign: 'center' }}>
+        <Typography
+          variant='caption'
+          color='primary'
+          sx={{ cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          Voir toutes les notifications
+        </Typography>
+      </Box>
+    </Menu>
+  );
 
   const renderMenu = (
     <Menu
@@ -126,7 +325,10 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
     >
       <MenuItem>
         <IconButton size='large' color='inherit'>
-          <Badge badgeContent={4} color='secondary'>
+          <Badge
+            badgeContent={notificationData.messages.length}
+            color='secondary'
+          >
             <MailIcon />
           </Badge>
         </IconButton>
@@ -135,7 +337,10 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
 
       <MenuItem>
         <IconButton size='large' color='inherit'>
-          <Badge badgeContent={17} color='secondary'>
+          <Badge
+            badgeContent={notificationData.notifications.length}
+            color='secondary'
+          >
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -189,9 +394,38 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder='Search…'
+                placeholder='Rechercher...'
                 inputProps={{ 'aria-label': 'search' }}
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyDown={handleSearchSubmit}
               />
+              {searchResults.length > 0 && (
+                <Paper
+                  sx={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    mt: 1,
+                    zIndex: 1300,
+                    maxHeight: 200,
+                    overflow: 'auto',
+                  }}
+                  elevation={3}
+                >
+                  <List>
+                    {searchResults.map((result) => (
+                      <ListItemButton
+                        key={result.path}
+                        onClick={() => handleSearchResultClick(result.path)}
+                      >
+                        <ListItemText primary={result.name} />
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Paper>
+              )}
             </Search>
 
             <Box sx={{ flexGrow: 1 }} />
@@ -201,13 +435,27 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
             </IconButton>
 
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton size='large' color='inherit'>
-                <Badge badgeContent={4} color='secondary'>
+              <IconButton
+                size='large'
+                color='inherit'
+                onClick={handleMessagesOpen}
+              >
+                <Badge
+                  badgeContent={notificationData.messages.length}
+                  color='secondary'
+                >
                   <MailIcon />
                 </Badge>
               </IconButton>
-              <IconButton size='large' color='inherit'>
-                <Badge badgeContent={17} color='secondary'>
+              <IconButton
+                size='large'
+                color='inherit'
+                onClick={handleNotificationsOpen}
+              >
+                <Badge
+                  badgeContent={notificationData.notifications.length}
+                  color='secondary'
+                >
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
@@ -235,6 +483,8 @@ export default function NavBar({ mode, onToggleTheme }: NavBarProps) {
 
         {renderMobileMenu}
         {renderMenu}
+        {renderMessagesMenu}
+        {renderNotificationsMenu}
       </Box>
     </Box>
   );

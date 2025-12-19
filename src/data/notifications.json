@@ -1,0 +1,57 @@
+{
+  "notifications": [
+    {
+      "id": 1,
+      "title": "Alerte de Sécurité",
+      "time": "Il y a 2 min",
+      "read": false
+    },
+    {
+      "id": 2,
+      "title": "Mise à jour du système",
+      "time": "Il y a 1h",
+      "read": false
+    },
+    {
+      "id": 3,
+      "title": "Nouveau rapport disponible",
+      "time": "Hier",
+      "read": true
+    },
+    {
+      "id": 4,
+      "title": "Connexion échouée (DB-2)",
+      "time": "Hier",
+      "read": true
+    },
+    {
+      "id": 5,
+      "title": "Sauvegarde terminée",
+      "time": "Il y a 2 jours",
+      "read": true
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "sender": "Alice Martin",
+      "subject": "Problème de déploiement",
+      "time": "10:30",
+      "avatar": "A"
+    },
+    {
+      "id": 2,
+      "sender": "Bob Dupont",
+      "subject": "Revue de code",
+      "time": "09:15",
+      "avatar": "B"
+    },
+    {
+      "id": 3,
+      "sender": "Support IT",
+      "subject": "Ticket #1234 résolu",
+      "time": "Hier",
+      "avatar": "S"
+    }
+  ]
+}

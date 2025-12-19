@@ -1,7 +1,7 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { SparkLineChart } from '@mui/x-charts';
 import PeopleIcon from '@mui/icons-material/People';
-import data from './client.json';
+import data from '../../../data/client.json';
 import React from 'preact/compat';
 import { red } from '@mui/material/colors';
 

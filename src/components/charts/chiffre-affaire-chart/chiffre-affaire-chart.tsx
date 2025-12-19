@@ -1,7 +1,7 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { SparkLineChart } from '@mui/x-charts';
 import EuroIcon from '@mui/icons-material/Euro';
-import data from './chiffre-affaire.json';
+import data from '../../../data/chiffre-affaire.json';
 import React from 'preact/compat';
 import { green } from '@mui/material/colors';
 

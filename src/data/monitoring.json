@@ -1,0 +1,74 @@
+{
+  "serverStatus": [
+    { "id": "server-1", "name": "Production-EU", "status": "online", "load": 45, "region": "Europe" },
+    { "id": "server-2", "name": "Production-US", "status": "online", "load": 60, "region": "USA" },
+    { "id": "server-3", "name": "Staging-ASIA", "status": "maintenance", "load": 0, "region": "Asie" },
+    { "id": "db-1", "name": "Primary-DB", "status": "online", "load": 78, "region": "Europe" },
+    { "id": "cache-1", "name": "Redis-Cluster", "status": "warning", "load": 89, "region": "Europe" }
+  ],
+  "infrastructureTree": [
+    {
+      "id": "root",
+      "label": "Infrastructure Globale",
+      "children": [
+        {
+          "id": "region-eu",
+          "label": "Région Europe",
+          "children": [
+            { "id": "cluster-eu-1", "label": "Cluster Alpha" },
+            { "id": "cluster-eu-2", "label": "Cluster Bêta" },
+            { "id": "db-eu", "label": "Shard BDD EU" }
+          ]
+        },
+        {
+          "id": "region-us",
+          "label": "Région USA",
+          "children": [
+            { "id": "cluster-us-1", "label": "Cluster Gamma" },
+            { "id": "db-us", "label": "Database Shard US" }
+          ]
+        },
+        {
+          "id": "monitoring",
+          "label": "Services de Surveillance",
+          "children": [
+            { "id": "service-prom", "label": "Prometheus" },
+            { "id": "service-graf", "label": "Grafana" },
+            { "id": "service-alert", "label": "AlertManager" }
+          ]
+        }
+      ]
+    }
+  ],
+  "traffic": {
+    "xAxis": [{ "data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+    "series": [
+      {
+        "data": [200, 300, 250, 400, 350, 500, 450, 600, 550, 700],
+        "label": "Requêtes Entrantes",
+        "color": "#0288d1",
+        "area": true
+      },
+      {
+        "data": [150, 200, 180, 300, 280, 400, 380, 500, 450, 600],
+        "label": "Requêtes Traitées",
+        "color": "#2e7d32"
+      }
+    ]
+  },
+  "errorRates": {
+    "data": [
+      { "id": 0, "value": 85, "label": "Succès (2xx)", "color": "#4caf50" },
+      { "id": 1, "value": 10, "label": "Redirection (3xx)", "color": "#2196f3" },
+      { "id": 2, "value": 4, "label": "Erreur Client (4xx)", "color": "#ff9800" },
+      { "id": 3, "value": 1, "label": "Erreur Serveur (5xx)", "color": "#f44336" }
+    ]
+  },
+  "performance": {
+    "xAxis": [{ "scaleType": "band", "data": ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"] }],
+    "series": [
+      { "data": [20, 30, 80, 60, 90, 40], "label": "Utilisation CPU %", "color": "#7b1fa2" },
+      { "data": [40, 50, 70, 65, 85, 55], "label": "Utilisation Mémoire %", "color": "#ed6c02" }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    { "id": "client", "type": "client", "label": "Clients", "x": 10, "y": 50, "status": "up" },
+    { "id": "lb", "type": "lb", "label": "Load Balancer", "x": 30, "y": 50, "status": "up" },
+    { "id": "app1", "type": "app", "label": "App Server 1", "x": 50, "y": 30, "status": "up" },
+    { "id": "app2", "type": "app", "label": "App Server 2", "x": 50, "y": 70, "status": "warning" },
+    { "id": "db-master", "type": "db", "label": "Master DB", "x": 75, "y": 30, "status": "up" },
+    { "id": "db-slave", "type": "db", "label": "Replica DB", "x": 75, "y": 70, "status": "up" },
+    { "id": "cache", "type": "cache", "label": "Redis Cache", "x": 75, "y": 50, "status": "up" }
+  ],
+  "links": [
+    { "id": "l1", "source": "client", "target": "lb", "status": "active" },
+    { "id": "l2", "source": "lb", "target": "app1", "status": "active" },
+    { "id": "l3", "source": "lb", "target": "app2", "status": "latency" },
+    { "id": "l4", "source": "app1", "target": "db-master", "status": "active" },
+    { "id": "l5", "source": "app1", "target": "cache", "status": "active" },
+    { "id": "l6", "source": "app2", "target": "db-master", "status": "active" }, 
+    { "id": "l7", "source": "db-master", "target": "db-slave", "status": "active" }
+  ]
+}

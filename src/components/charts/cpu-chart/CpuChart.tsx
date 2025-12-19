@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
-import cpuData from './cpuData.json';
+import cpuData from '../../../data/cpuData.json';
 import { purple } from '@mui/material/colors';
 
 export default function CpuChart() {

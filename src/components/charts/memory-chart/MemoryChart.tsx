@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
-import memoryData from './memoryData.json';
+import memoryData from '../../../data/memoryData.json';
 import { orange } from '@mui/material/colors';
 
 export default function MemoryChart() {

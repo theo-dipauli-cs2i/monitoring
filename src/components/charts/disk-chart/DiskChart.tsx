@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
-import diskData from './diskData.json';
+import diskData from '../../../data/diskData.json';
 
 export default function DiskChart() {
   const theme = useTheme();
